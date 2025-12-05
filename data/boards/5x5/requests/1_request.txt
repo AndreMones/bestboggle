@@ -1,0 +1,2 @@
+False
+{'board': 'DESGDPTRENLATIMCENALSDRSP', 'seedboard': 'UAAMEKSKCNLYTZAPJVWNNUAEA', 'perfectboard': 'HESGDCSRENLATIAPENTRSRDES', 'fromboard': 'DESGDPTRENLATIMCENALSDRSP', 'fromtype': 'Refined', 'timefound': '25/11/2025 05:15:36', 'wasrecord': False, 'upgraded': False, 'catagory': 'C1'}
