@@ -1,5 +1,6 @@
-"""File Boggle:
+"""File Boggle: Manage boggle board data and stores it as it's generated.
 
+Author: Andre Mones
 """
 
 import _thread
@@ -11,6 +12,7 @@ from time import sleep
 
 
 def read_csv(path: str) -> list[dict]:
+    """Reads a csv file, skipping empty lines of commas"""
     result = []
     with open(path, 'r', newline='') as csvfile:
         reader = csv.DictReader(csvfile, skipinitialspace=True)
@@ -24,7 +26,8 @@ def read_csv(path: str) -> list[dict]:
     return result
 
 
-def read_high_score():
+def read_high_score() -> int:
+    """returns the highest score stored at BEST_PATH"""
     records = read_csv(config.COMPILED_BEST_PATH)
     high_score = 0
     for board in records:
@@ -41,32 +44,40 @@ END_PROMPTED = False
 
 
 def prompt_kill():
+   """Prompts the user to quit"""
    global END_PROMPTED
    input("input anything to quit safely: ")
    END_PROMPTED = True
 
 
 def lookup_fields(path: str) -> list[str]:
+    """Returns the fieldnames of a csv file from a path"""
     with open(path, 'r', newline='') as csvfile:
         feilds = csvfile.readline().rstrip().split(',')
     return feilds
 
 
-def lookup_board(board_str: str, path = config.COMPILED_BOARDS_PATH, catagory = None) -> dict:
+def lookup_board(board_str: str, path = config.COMPILED_BOARDS_PATH,
+                 check: tuple[str, str] = None) -> dict[str: str]:
+    """Looks up a board's dictionary from a csv file.
+    Optional check argument (field, value) causes function to return None
+    if board doesn't have value at field.
+    """
+    if check:
+        field, value = check
     file = read_csv(path)
     for row in file:
         if board_str == row['board']:
-            row['score'] = int(row['score'])
-            if catagory != None:
-                if row['catagory'] == catagory:
-                    return row
-                else:
+            if check and row[field] != value:
                     break
             return row
 
 
-def write_dict(path: str, board_dict: dict, fields: list = None):
-    if fields == None:
+def write_dict(path: str, board_dict: dict, fields: list[str] = None):
+    """Writes a board dict to a csv file. Does not tolorate board_dict
+    keys that aren't in csv file's fields
+    Optional fields argument overrides (but does not replace) field names found in file"""
+    if not fields:
         fields = lookup_fields(path)
     assert set(board_dict.keys()) <= set(fields)
     line = ''
@@ -84,6 +95,7 @@ def write_dict(path: str, board_dict: dict, fields: list = None):
 
 
 def get_com_files() -> tuple[list[tuple], list[tuple]]:
+    """Identifies path's to request and response files in communications folder."""
     comfiles = [os.path.join(config.REQUESTS_FOLDER_PATH, f) for f in os.listdir(config.REQUESTS_FOLDER_PATH) if os.path.isfile(os.path.join(config.REQUESTS_FOLDER_PATH, f))]
     request_files = {}
     response_files = {}

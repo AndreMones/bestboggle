@@ -1,11 +1,19 @@
+"""config: configuration file for best boggle project
+
+Author: Andre Mones
+"""
+
 import re
 
 ALPHABET = ['A', 'B', 'C', 'D', 'E', 'F', 'G', 'H', 'I', 'J', 'K', 'L', 'M',
             'N', 'O', 'P', 'Q', 'R', 'S', 'T', 'U', 'V', 'W', 'X', 'Y', 'Z']
+ALPHA_LEN = len(ALPHABET)
 
 MIN_WORD = 3
 
 DICT_PATH = "data/dicts/dictBig.txt"
+
+THRESHOLD = 5500
 
 # THE VAIRABLES BELOW ARE USED BY CSV FILES!
     # DO NOT CHANGE THEM UNLESS YOU REALLY KNOW WHAT YOU'RE DOING, BECAUSE THE CODE WON'T AJUST ON IT'S OWN!
@@ -17,6 +25,8 @@ REFINED = 'Refined'     # Signifies that a board has been refined with heat 1.
 NA = 'N/A'              # Signifies nothing in particular: unknown / other.
 
 BOARDS_FOLDER_PATH = str(f"data/boards/{SIZE}x{SIZE}/")
+# BOARDS_FOLDER_PATH = str(f"data/boards/5x5-Andre/")
+
 COMPILED_FOLDER_PATH = BOARDS_FOLDER_PATH + "compiled boards/"
 COMPILED_BOARDS_PATH = COMPILED_FOLDER_PATH + "all_boards.csv"
 COMPILED_BEST_PATH = COMPILED_FOLDER_PATH + "records.csv"
@@ -26,11 +36,13 @@ COMPILED_PERFECTS_PATH = COMPILED_FOLDER_PATH + "perfects.csv"
 REQUESTS_FOLDER_PATH = BOARDS_FOLDER_PATH + "requests/"
 
 def get_request_x(i: int) -> str:
-    assert isinstance(i, int)
+    """returns a request file corresponding to the given number"""
+    assert isinstance(i, int) and i >= 0
     return REQUESTS_FOLDER_PATH + f"{i}_request.txt"
 
 def get_response_x(i: int) -> str:
-    assert isinstance(i, int)
+    """returns a response file corresponding to the given number"""
+    assert isinstance(i, int) and i >= 0
     return REQUESTS_FOLDER_PATH + f"{i}_response.txt"
 
 request_format = re.compile("^.+/([1-9][0-9]*)_request.txt$")
@@ -53,3 +65,6 @@ def num_of_response(path: str) -> int:
     else:
         num = section.group(1)
     return num
+
+
+# git test

@@ -1,3 +1,0 @@
-True
-{'board': 'DSLAFEETIMRTNERSAIGSPLNST', 'score': 6024, 'seedboard': 'AYFSJKPTQZQGNWZBAZWSEKKSX', 'perfectboard': 'DSLAMEETIDRTNERSAIGSPLFNT', 'fromboard': 'DSLAMEETIPRTNERSAIGSPLNST', 'fromtype': 'Refined', 'timefound': '25/11/2025 14:20:57', 'wasrecord': False, 'upgraded': False, 'catagory': 'Unstable'}
-{'board': 'DSLAMEETIPRTNERSAIGSPLNST', 'seedboard': 'AYFSJKPTQZQGNWZBAZWSEKKSX', 'perfectboard': 'DSLAMEETIDRTNERSAIGSPLFNT', 'fromboard': 'DSLAMEETIDRTNERSAIGSPLFNT', 'fromtype': 'Refined', 'timefound': '25/11/2025 13:28:28', 'wasrecord': 'False', 'upgraded': True, 'catagory': 'Refined'}

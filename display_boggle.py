@@ -1,8 +1,15 @@
+"""display_board: module for displaying boggle data through text
+
+Author: Andre Mones
+"""
+
 import time
 import tools_boggle
+import config
 
 
-def display_board(board: list[list[str]]):
+def display_board(board: list[list]):
+    """Prints the board in a somewhat tolorable way"""
     for row in board:
         line = '   '
         for letter in row:
@@ -11,8 +18,9 @@ def display_board(board: list[list[str]]):
     print('')
 
 
-def display_data(board, score, data, request_num):
-    High_Board = tools_boggle.unpack_board(data['High']['board'], 5)
+def display_data(board: list[list[str]], score: int, data: dict, request_num: int):
+    """Prints a bunch of data"""
+    High_Board = tools_boggle.unpack_board(data['High']['board'], config.SIZE)
     print('\n\n\n\n\n')
     print('Request Slot:', request_num)
     print('')
@@ -20,7 +28,7 @@ def display_data(board, score, data, request_num):
         print('Start Board:', data['Start Board'])
         print('Heat Level:', data['Heat'])
     else:
-        print(' '*25 + '\n')
+        print(' ' * config.SIZE**2 + '\n')
     print('Curr Board:')
     display_board(board)
     # show_board(shadow)

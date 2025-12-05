@@ -1,6 +1,7 @@
-"""score boggle: scores a boggle board.
-Andre Mones
-Credits:
+"""tools_boggle: contains a boggle scoring function and other tools.
+
+Author: Andre Mones
+Credits: Michal Young's homework assignment https://github.com/UO-CS210/06-Boggle was the starting point for this file.
 """
 import doctest
 import config
@@ -54,7 +55,7 @@ def normalize(s: str) -> str:
 def read_dict(path: str) -> list[str]:
     """Returns ordered list of valid, normalized words from dictionary.
 
-    >>> read_dict("data/shortdict.txt")
+    >>> read_dict("data/dicts/shortdict.txt")
     ['ALPHA', 'BED', 'BETA', 'DELTA', 'GAMMA', 'OMEGA']
     """
     result = []
@@ -67,6 +68,7 @@ def read_dict(path: str) -> list[str]:
 
 
 def read_tree(words: list[str], skip = 0) -> dict:
+    """Read a ordered list of words into a dict tree"""
     if words == []:
         return {'state':NOPE}
     tree = {}
@@ -82,7 +84,7 @@ def read_tree(words: list[str], skip = 0) -> dict:
         lower_bound = 0
         upper_bound = len(words) - 1
 
-        if i == 25:
+        if i == len(config.ALPHABET) - 1:
             lower_bound = len(words)
         else:
             next_letter = config.ALPHABET[i+1]
@@ -127,7 +129,7 @@ def tree_search(candidate: str, tree: dict) -> str:
 
 def unpack_board(letters: str, rows: int) -> list[list[str]]:
     """Unpack a single string of characters into
-    a square matrix of individual characters, N_ROWS x N_ROWS.
+    a matrix of individual characters with a given number of rows.
 
     >>> unpack_board("abcdefghi", rows=3)
     [['a', 'b', 'c'], ['d', 'e', 'f'], ['g', 'h', 'i']]
@@ -136,12 +138,22 @@ def unpack_board(letters: str, rows: int) -> list[list[str]]:
     [['a', 'b', 'c', 'd'], ['e', 'f', 'g', 'h'], ['i', 'j', 'k', 'l'], ['m', 'n', 'o', 'p']]
     """
     matrix = []
+    cols = int(len(letters) / rows)
     for i in range(rows):
-        matrix.append(list(letters[i*rows : (i+1)*rows]))
+        matrix.append(list(letters[i*cols : (i+1)*cols]))
     return matrix
 
 
-def repack_board(board: list) -> str:
+def repack_board(board: list[list]) -> str:
+    """Pack a matrix of individual characters into a 
+    single string of characters.
+
+    >>> repack_board([['a','b','c'], ['d','e','f'], ['g','h','i']])
+    'abcdefghi'
+
+    >>> repack_board([['a','b','c','d'], ['e','f','g','h'], ['i','j','k','l'], ['m','n','o','p']])
+    'abcdefghijklmnop'
+    """
     board_str = ''
     for row in board:
         for square in row:
@@ -155,7 +167,7 @@ def boggle_solve(board: list[list[str]], words: dict, shadow = None) -> list[str
     duplicates.
 
     >>> board = unpack_board("PLXXMEXXXAXXSXXX", rows=4)
-    >>> words = read_dict("data/dict.txt")
+    >>> words = read_tree(read_dict("data/dicts/dict.txt"))
     >>> boggle_solve(board, words)
     ['AMP', 'AMPLE', 'AXE', 'AXLE', 'ELM', 'EXAM', 'LEA', 'MAX', 'PEA', 'PLEA', 'SAME', 'SAMPLE', 'SAX']
     """
@@ -232,4 +244,9 @@ def score(board, words: dict, shadow = None):
 
 
 if __name__ == "__main__":
-    doctest.testmod()
+    # doctest.testmod()
+    words = read_tree(read_dict(config.DICT_PATH))
+    board_str = '#'
+    while board_str:
+        board_str = normalize(input('\nWhat board would you like to score? (return to quit): ').strip())
+        print('Score:', score(board_str, words))

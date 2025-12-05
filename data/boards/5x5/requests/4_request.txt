@@ -1,2 +1,0 @@
-True
-{'board': 'SGDERCENISLARTSPITERMSNED', 'seedboard': 'GKDBJFFNSGCUYYHBMCWJDVFVL', 'perfectboard': 'SGDIRPENESLIRTSCATEAHSPRD', 'fromboard': 'RGDEMSENISLIRTSPATERMSCOD', 'fromtype': 'Refined', 'timefound': '25/11/2025 09:12:45', 'wasrecord': False, 'upgraded': False, 'catagory': 'C1'}
